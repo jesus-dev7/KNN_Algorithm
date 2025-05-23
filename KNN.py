@@ -104,7 +104,7 @@ def calcul_distance():
                 "Error": "black",
                 "Fighting": "brown"
             }
-            Vari = Couleurs.get(Type___, "gray")
+            Vari = Couleurs.get(Type___, "black")
             Newlist1_ = [x, Coo1]
             Newlist2_ = [y, Coo2]
             Newlist3_ = [z, Coo3]
@@ -159,7 +159,10 @@ def ClearCSV():
             Droit = 1
             for Q, V in Ligne.items():
                 if V != '' and Q != 'LEGENDARY' or type(V) != list and not (V.isdigit() and int(V) > 1000):
-                    NewDict[Q] = V
+                    if type(V) == float:
+                        NewDict[Q] = int(V)
+                    else:
+                        NewDict[Q] = V
             if Droit == 1:
                 BigList.append(NewDict.copy())
             try:
