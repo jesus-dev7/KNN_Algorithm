@@ -98,7 +98,7 @@ def calcul_distance():
             Couleurs = {
                 "Water": "blue",
                 "Dragon": "darkgreen",
-                "Normal": "white",
+                "Normal": "red",
                 "Poison": "purple",
                 "Bug": "green",
                 "Error": "black",
@@ -158,11 +158,14 @@ def ClearCSV():
         for Ligne in Dict:
             Droit = 1
             for Q, V in Ligne.items():
-                if V != '' and Q != 'LEGENDARY' or type(V) != list and not (V.isdigit() and int(V) > 1000):
-                    if type(V) == float:
-                        NewDict[Q] = int(V)
+                if V != '' and Q != 'LEGENDARY' or type(V) != list and not (V.isdigit() and float(V) > 1000):
+                    if Q in ['SPD', 'DEF', 'ATK']:
+                        V_float = float(V)
+                        if V_float <= 1000:
+                            NewDict[Q] = int(V_float)
                     else:
-                        NewDict[Q] = V
+                        if type(V) != int and type(V) != float:
+                            NewDict[Q] = V
             if Droit == 1:
                 BigList.append(NewDict.copy())
             try:
