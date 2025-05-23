@@ -86,6 +86,7 @@ def calcul_distance():
         Norm = plt.Normalize(Vals.min(), Vals.max())
         Couleurs = plt.cm.inferno_r(Norm(Vals))
         Axe__.plot_surface(N, H, Z_3D, facecolors = Couleurs, rstride = 1, cstride = 1, edgecolor = None, shade = False, alpha = 0.10)"""
+        Types = {}
         for Coo1, Coo2, Coo3 in zip(X__, Y__, Z__):
             Type___ = "Error"
             for Elem in BigList:
@@ -94,7 +95,19 @@ def calcul_distance():
                     if int(Elem.get("DEF")) == Coo2:
                         if int(Elem.get("ATK")) == Coo3:
                             Type___ = Elem["TYPE1"]
+                            match Type___:
+                                case _:
+                                    if Type___ not in Types:
+                                        Types[Type___] = 1
+                                    else:
+                                        Types[Type___] += 1
                             break
+            print(Types)
+            try:
+                Type = max(Types, key = Types.get)
+                print(Type)
+            except:
+                print("Error")
             Couleurs = {
                 "Water": "blue",
                 "Dragon": "darkgreen",
@@ -113,36 +126,8 @@ def calcul_distance():
             plt.ylabel('Defense')
             Axe__.set_zlabel("Attaque")
             Axe__.scatter(Newlist1_, Newlist2_, Newlist3_, c = Vari, s = 100)
-        
+    
     K_Voisins()
-    def ChercherType():
-        global BigList
-        print(BigList)
-        Types = {}
-        for AnElem in BigList:
-            try:
-                NewX = int(AnElem["SPD"])
-                NewY = int(AnElem["DEF"])
-                NewZ = int(AnElem["ATK"])
-                print(AnElem)
-                NewDistance = sqrt((NewX - x)**2 + (NewY - y)**2 + (NewZ - z)**2)
-                if NewDistance <= K:
-                    tp = AnElem["TYPE1"]
-                    match tp:
-                        case _:
-                            if tp not in Types:
-                                Types[tp] = 1
-                            else:
-                                Types[tp] += 1
-            except:
-                pass
-        print(Types)
-        try:
-            Type = max(Types, key = Types.get)
-            print(Type)
-        except:
-            print("Error")
-    ChercherType()
     plt.show()
        
 def ClearCSV():
